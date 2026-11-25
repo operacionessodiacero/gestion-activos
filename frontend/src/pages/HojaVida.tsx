@@ -7,6 +7,9 @@ import { thumbnail, call } from '../api';
 
 const HV_CSS = `body{font-family:Arial,sans-serif;font-size:11px;color:#000}.hv table{width:100%;border-collapse:collapse}.hv th,.hv td{border:1px solid #333;padding:3px 5px;text-align:left;vertical-align:top}.hv th{background:#e5e7eb;font-weight:bold}.hv h4{background:#1f2937;color:#fff;margin:10px 0 0;padding:4px 6px;font-size:11px}.hv-head td{text-align:center;font-weight:bold}.hv-top{margin-top:6px}.hv-photo img{width:180px;height:135px}.pend{color:#a16207;font-style:italic}.hv-foot{font-size:9px;color:#555}`;
 
+/** Google Sheets convierte '08/07/2025' en fecha; se muestra de nuevo como dd/mm/aaaa. */
+const diaDoc = (v: any) => /^\d{4}-\d\d-\d\dT/.test(String(v)) ? new Date(v).toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit', year: 'numeric' }) : String(v);
+
 /** Hoja de vida basada en el formato corporativo JAB-PA-GEA-F-46 (se conserva su identificación documental). */
 export default function HojaVida() {
   const { id = '' } = useParams();
@@ -47,7 +50,7 @@ export default function HojaVida() {
       <table className="hv-head"><tbody><tr>
         <td className="hv-logo">{cfg('empresa', 'LAMINADOS JAB')}</td>
         <td className="hv-title">HOJA DE VIDA EQUIPOS Y MAQUINARIA</td>
-        <td className="hv-doc">CÓDIGO: {cfg('formato_hv_codigo', 'JAB-PA-GEA-F-46')}<br />{cfg('formato_hv_version', 'Versión 3')}<br />VIGENCIA: {cfg('formato_hv_vigencia', '08/07/2025')}</td></tr></tbody></table>
+        <td className="hv-doc">CÓDIGO: {cfg('formato_hv_codigo', 'JAB-PA-GEA-F-46')}<br />{cfg('formato_hv_version', 'Versión 3')}<br />VIGENCIA: {diaDoc(cfg('formato_hv_vigencia', '08/07/2025'))}</td></tr></tbody></table>
       <div className="hv-top">
         <div className="hv-photo">{foto ? <img src={foto} alt="" /> : <div className="ph">Sin fotografía</div>}</div>
         <table className="hv-t"><tbody>
