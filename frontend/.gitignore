@@ -1,0 +1,4 @@
+tests/fixture.xlsx
+node_modules
+dist
+.env.local
